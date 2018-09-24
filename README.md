@@ -1,7 +1,7 @@
 # Reconstruct binary search trees
 
 I subscribe to a "daily coding problem" email list.
-They send out one interview question from a technical interview of
+Every day, they send out one interview question from a technical interview of
 a desirable company to work for.
 The sent me this:
 
@@ -17,43 +17,47 @@ The sent me this:
      / \   \
     2   4   8
 
-I'm certain I would have done poorly in an interview where they
+I would have done poorly in an interview where they
 expected success on this. It took me 2 days and 7 pieces of paper
 covered with binary search tree graphs to hit on a solution.
 
 Then it took me several hours of experimenting to get to working code.
 I even had other binary search tree programs saved, so I didn't have
-to start from a zerol-length file.
+to start from a zero-length file.
 
 I found several solutions on the web:
 
 * [Stack overflow](https://stackoverflow.com/questions/13167536/how-to-construct-bst-given-post-order-traversal#13168162)
-* [Geeks for geeks](https://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-postorder/) gives an O(n^2) and an O(n) solution.
+* [Geeks for geeks](https://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-postorder/)
+gives an **O**(n<sup>2</sup>) and an **O**(n) solution.
+
+My solution differed radically from those.
 
 ## Design
 
 My design is different.
-I observe that if you build a binary search tree from a list of integers
-ordered as if they were derived from a post-order traverse of another
-binary search tree,
-not only is the last node the root of the finished tree,
-but that every node inserted into the tree becomes the root of the
-tree when it is inserted.
+The input to the desired algorithm is an array or list of
+integers, ordered as a post-order traverse of an existing tree.
+The final node of the list ends up as the root of the finished
+binary search tree.
+I observed that if you build a binary search tree from
+that list one element at a time,
+every value gets inserted as the new root of a tree.
 
 With this observation, it becomes possible to write a function
 with a binary search tree and a value to insert
 that returns a binary search tree.
-The returned binary search tree has a pos-order traversal
-identical to the values inserted so far.
+The returned binary search tree has a post-order traversal
+identical to the order of the values inserted so far.
 
 I wrote just such [a program](postorder.go) to try things out.
 It accepts a list of integers on the command line.
 The first stage of the program does a traditional binary search tree insert
 on each of the integers from the command line, in order.
 I believe you can produce a binary search tree of any desired configuration
-by an appropriate command line list of integers.
-Next, the program performas a post-order traversal of that binary search tree,
-giving back a slice (program is in Go) of ints.
+by listing tree node values breadth-first.
+Next, the program performs a post-order traversal of that binary search tree,
+giving back a slice (I wrote these programs in Go) of ints.
 
 The slice of ints from the post-order traverse gets used to create
 a second binary search tree by inserting the ints in array order.
@@ -71,7 +75,7 @@ line like this:
 After using [a script](comp) to run the command line,
 and process using GraphViz `dot`, you get an image like this:
 
-![tree comparison](https://raw.githubusercontent.com/bediger4000/postorder-tree-traversal/master/example.png)
+![tree comparison](https://github.com/bediger4000/postorder-tree-traversal/raw/master/example.png)
 
 Sure, I could be faking that image.
 But I am including the source of the program that created it.
@@ -89,10 +93,18 @@ two binary search trees it creates.
 
 I build a [version of the program](randtree.org) that accepts a single number on its command line,
 generates that many pseudo-random integers, and inserts them into a binary search tree.
-A post-order traversal of that tree generates an array of integers, which gets used
-in the array order to create a second tree.
+A post-order traversal of that tree returns an array of integers,
+which gets used to create a second tree.
 
-More-or-less random trees help flush out any bugs in the algoirthm.
+More-or-less random trees help flush out any bugs in the algorithm.
+I generated the image below like this: `$ ./randt 11`
+
+![tree comparison](https://github.com/bediger4000/postorder-tree-traversal/raw/master/example_random.png)
+
+I use `rand.Intn()` to generate pseudo-random values for these trees.
+`rand.Intn()` generates uniform distribution numbers,
+so the resulting trees tend to be "filled in",
+rather than have long scraggly side branches.
 
 ## Performance
 
@@ -105,4 +117,4 @@ of time complexity.
 Also, I couldn't figure out how to estimate the time complexity of this algorithm.
 I thought it was possible sub-linear, **O**(lg N)
 
-![complexity](https://raw.githubusercontent.com/bediger4000/postorder-tree-traversal/master/complexity.png)
+![complexity](https://github.com/bediger4000/postorder-tree-traversal/raw/master/complexity.png)
