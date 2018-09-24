@@ -66,12 +66,12 @@ created by post-order insertion.
 The tree in the problem statement could be created by a command
 line like this:
 
-   ./postorder 5 3 7 2 4 8 > example.dot
+    ./postorder 5 3 7 2 4 8 > example.dot
 
 After using [a script](comp) to run the command line,
 and process using GraphViz `dot`, you get an image like this:
 
-![tree comparison](https://raw.githubusercontent.com/bediger4000/postorder-traversal/master/example.png)
+![tree comparison](https://raw.githubusercontent.com/bediger4000/postorder-tree-traversal/master/example.png)
 
 Sure, I could be faking that image.
 But I am including the source of the program that created it.
@@ -95,3 +95,14 @@ in the array order to create a second tree.
 More-or-less random trees help flush out any bugs in the algoirthm.
 
 ## Performance
+
+The web pages I found that gave solutions to the problem above
+had complexity estimates for their algorithms ( **O**(N) and **O**(N<sup>2</sup>) )
+My algorithm is quite different,
+and it's not that much code.
+I decided to count the number of comparisons for trees of different sizes to get an empirical estimete
+of time complexity.
+Also, I couldn't figure out how to estimate the time complexity of this algorithm.
+I thought it was possible sub-linear, **O**(lg N)
+
+![complexity](https://raw.githubusercontent.com/bediger4000/postorder-tree-traversal/master/complexity.png)
