@@ -1,0 +1,8 @@
+unset key
+set title 'Time complexity of post-order traverse insertion'
+set ylabel 'Number of comparisons'
+set xlabel 'Number of nodes inserted'
+set grid
+set term png large
+set out 'complexity2.png'
+plot 'graphable' using 1:4 with lines
