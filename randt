@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm r.dot r.png
+./randtree $1 > r.dot
+dot -Tpng -o r.png r.dot
+feh r.png

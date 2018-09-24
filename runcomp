@@ -1,0 +1,16 @@
+#!/bin/bash
+
+rm -f data
+touch data
+
+I=1
+while ((I <= 4000))
+do
+	N=0
+	while ((N < 50))
+	do
+		./compcnt $I >> data
+		((N = N + 1))
+	done
+	((I = I + 1))
+done

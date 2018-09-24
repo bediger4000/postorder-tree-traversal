@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -f g.dot g.png
+./postorder $* > g.dot
+dot -Tpng -o g.png g.dot
+feh g.png

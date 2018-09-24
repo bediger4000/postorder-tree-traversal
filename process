@@ -1,0 +1,6 @@
+#!/bin/bash
+
+awk 'BEGIN{nodes=0;count=0} \
+	NR==1{nodes=$1; count=$2; N = 1} \
+	NR>1 {if ($1 != nodes) {ave = count/N; print nodes, N, count, ave, count/nodes; nodes = $1; count = $2; N=1} else {N=N+1; count += $2}} \
+	END {ave = count/N; print nodes, N, count, ave, count/nodes}' data > graphable
