@@ -35,7 +35,6 @@ My solution differed radically from those.
 
 ## Design
 
-My design is different.
 The input to the desired algorithm is an array or list of
 integers, ordered as a post-order traverse of an existing tree.
 The final node of the list ends up as the root of the finished
@@ -72,6 +71,8 @@ line like this:
 
     ./postorder 5 3 7 2 4 8 > example.dot
 
+You get the order of the numbers on the command line 
+by doing a breadth-first traversal of the desired binary search tree.
 After using [a script](comp) to run the command line,
 and process using GraphViz `dot`, you get an image like this:
 
@@ -80,6 +81,9 @@ and process using GraphViz `dot`, you get an image like this:
 Sure, I could be faking that image.
 But I am including the source of the program that created it.
 But you can look at the source, and even try it yourself.
+
+I believe the example is carefully crafted to avoid
+the case of something.
 
 ### Build it
 
@@ -97,7 +101,10 @@ A post-order traversal of that tree returns an array of integers,
 which gets used to create a second tree.
 
 More-or-less random trees help flush out any bugs in the algorithm.
-I generated the image below like this: `$ ./randt 11`
+I generated the image below like this: 
+
+    $ go build randtree.go
+    $ ./randt 11
 
 ![tree comparison](https://github.com/bediger4000/postorder-tree-traversal/raw/master/example_random.png)
 
@@ -116,5 +123,10 @@ I decided to count the number of comparisons for trees of different sizes to get
 of time complexity.
 Also, I couldn't figure out how to estimate the time complexity of this algorithm.
 I thought it was possible sub-linear, **O**(lg N)
+
+    $ go build compcnt.go
+    $ ./runcomp
+    $ ./process
+    $ gnuplot < comp.load
 
 ![complexity](https://github.com/bediger4000/postorder-tree-traversal/raw/master/complexity.png)
