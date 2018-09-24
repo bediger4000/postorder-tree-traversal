@@ -48,52 +48,58 @@ func insert(node *TreeNode, value int) *TreeNode {
 // is always the root of the tree returned.
 func postorderInsert(root *TreeNode, value int) *TreeNode {
 
-	newnode := &TreeNode{data: value}
+	newroot := &TreeNode{data: value}
 
 	if root == nil {
-		return newnode
+		return newroot
 	}
 
 	if root.left == nil && root.right == nil {
-		if newnode.data > root.data {
-			newnode.left = root
+		if newroot.data > root.data {
+			newroot.left = root
 		}
-		if newnode.data < root.data {
-			newnode.right = root
+		if newroot.data < root.data {
+			newroot.right = root
 		}
-		return newnode
+		return newroot
 	}
 
-	// find where to break off the "top" of the tree
-	// to insert the new node
+	// Find where to break off the "top" of the tree
+	// to insert the new node. Code duplicated for
+	// left and right branches of tree, but unifying it
+	// would just make it puzzling.
+
+	// prev and node will point to two node of the tree
+	// where we want to insert newroot. prev will become
+	// the root of the subtree on one branch of newroot
 	var prev *TreeNode
 	node := root
 
-	if newnode.data > root.data {
-		newnode.left = root
-		for node != nil && newnode.data > node.data {
+	if newroot.data > root.data {
+		newroot.left = root
+		for node != nil && newroot.data > node.data {
 			prev = node
 			node = node.right
 		}
 		if node != nil {
 			prev.right = nil
-			newnode.right = node
+			newroot.right = node
 		}
 
-	} else if newnode.data < root.data {
-		newnode.right = root
-		for node != nil && newnode.data < node.data {
+	} else if newroot.data < root.data {
+		newroot.right = root
+		for node != nil && newroot.data < node.data {
 			prev = node
 			node = node.left
 		}
 		if node != nil {
 			prev.left = nil
-			newnode.left = node
+			newroot.left = node
 		}
 	}
 	// value == root.data will just fall through,
 	// and screw up construction of the tree.
-	return newnode
+	return newroot
 }
 
 func inorderArray(node *TreeNode, values []int) []int {
@@ -156,7 +162,6 @@ func drawTree(node *TreeNode, prefix string) {
 func main() {
 
 	var inorderroot *TreeNode
-	// var postorderroot *TreeNode
 	var inputvalues []int
 
 	for _, str := range os.Args[1:] {
@@ -164,7 +169,6 @@ func main() {
 		if e == nil {
 			inputvalues = append(inputvalues, i)
 			inorderroot = insert(inorderroot, i)
-			// postorderroot = postorderInsert(postorderroot, i)
 		}
 	}
 
