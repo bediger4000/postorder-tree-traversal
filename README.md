@@ -83,7 +83,16 @@ But I am including the source of the program that created it.
 But you can look at the source, and even try it yourself.
 
 I believe the example is carefully crafted to avoid
-the case of something.
+at least one case.
+My algorithm has to have a for-loop to traverse all-left or all-right
+branches to find where to insert a root node.
+Trees exist where the insertion point is some arbitrary number of links
+down the left or right branches from the current root node.
+You can create an example tree with breadth-first order of insertion `5 3 7 6`.
+A binary search tree created like that has post-order traversal array of `3 6 7 5`.
+Inserting the final value of 5 causes a traverse down the left branches
+of the existing (linear) tree using my algorithm.
+I believe you can construct binary search trees where that traverse can have an arbitrary (yet finite) value.
 
 ### Build it
 
@@ -95,10 +104,10 @@ two binary search trees it creates.
 
 ## Verification - fuzzing
 
-I build a [version of the program](randtree.org) that accepts a single number on its command line,
+I wrote a [version of the program](randtree.org) that accepts a single number on its command line,
 generates that many pseudo-random integers, and inserts them into a binary search tree.
-A post-order traversal of that tree returns an array of integers,
-which gets used to create a second tree.
+A post-order traversal of that tree returns an array of integers.
+The program inserts that array's values in a second tree.
 
 More-or-less random trees help flush out any bugs in the algorithm.
 I generated the image below like this: 
@@ -122,7 +131,11 @@ and it's not that much code.
 I decided to count the number of comparisons for trees of different sizes to get an empirical estimete
 of time complexity.
 Also, I couldn't figure out how to estimate the time complexity of this algorithm.
-I thought it was possible sub-linear, **O**(lg N)
+I thought it was possibly sub-linear, **O**(lg N)
+
+I write [another version](compcnt.go) that actually counts the number of comparisons
+of node's key and insert value, and gives back the total number of comparisons made
+to recreate a binary search tree from the post-order traverse values.
 
     $ go build compcnt.go
     $ ./runcomp
@@ -130,3 +143,11 @@ I thought it was possible sub-linear, **O**(lg N)
     $ gnuplot < comp.load
 
 ![complexity](https://github.com/bediger4000/postorder-tree-traversal/raw/master/complexity.png)
+
+Wow, it's linear! And this particular implementation has a factor of almost exactly 2.5!
+If I counted the tests for node against nil, I would get something like a factor of 7,
+but it would still be linear with the number of values inserted.
+When I see this, and think about it, my early **O**(lg N) guess is completely wrong.
+Insertion of a value into a tree means that the value, and some other nodes' values,
+get inspected.
+Linear is the best you can do in this case.
