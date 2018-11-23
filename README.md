@@ -42,6 +42,11 @@ binary search tree.
 I observed that if you build a binary search tree from
 that list one element at a time,
 every value gets inserted as the new root of a tree.
+Because the original tree has the binary search tree property,
+and the keys are integers,
+you can decide where to place the node that was the tree's root.
+Without that property, you can't recover a binary tree from
+just its post-order traversal.
 
 With this observation, it becomes possible to write a function
 with a binary search tree and a value to insert
