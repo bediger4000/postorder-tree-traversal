@@ -84,8 +84,9 @@ and process using GraphViz `dot`, you get an image like this:
 ![tree comparison](https://github.com/bediger4000/postorder-tree-traversal/raw/master/example.png)
 
 Sure, I could be faking that image.
-But I am including the source of the program that created it.
-But you can look at the source, and even try it yourself.
+I am including the source of the program that created it,
+so you can look at the source,
+and try it yourself.
 
 I believe the example is carefully crafted to avoid
 at least one case.
@@ -93,11 +94,13 @@ My algorithm has to have a for-loop to traverse all-left or all-right
 branches to find where to insert a root node.
 Trees exist where the insertion point is some arbitrary number of links
 down the left or right branches from the current root node.
-You can create an example tree with breadth-first order of insertion `5 3 7 6`.
-A binary search tree created like that has post-order traversal array of `3 6 7 5`.
-Inserting the final value of 5 causes a traverse down the left branches
-of the existing (linear) tree using my algorithm.
-I believe you can construct binary search trees where that traverse can have an arbitrary (yet finite) value.
+You can create an example tree with breadth-first order of insertion
+`5 3 7 6`.
+A binary search tree created like that has post-order traversal
+array of `3 6 7 5`.  Inserting the final value of 5 causes a traverse
+down the left branches of the existing (linear) tree using my algorithm.
+I believe you can construct binary search trees where that traverse can
+have an arbitrary (yet finite) value.
 
 ### Build it
 
